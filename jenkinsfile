@@ -3,7 +3,7 @@ pipeline{
 
   tools {
     nodejs "node"
-  {
+  }
 
   parameters {
   string(name:'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor del docker.' )
@@ -11,4 +11,18 @@ pipeline{
   string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de la pagina,')
   string(name: 'container_port', defaultValue: 80, description: 'Puerto que usa el contenedor,')
   }
+
+  stages {
+    stage('install') {
+      steps{
+        git branch: 'develop', url: 'https://github.com/JCGIT03/Taller_Jenkins.git'
+        dir('.') {
+          sh 'npm install'
+        }
+      }
+    }
+    stage('test') {
+      steps {
+        
+}
 }
