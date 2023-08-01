@@ -1,28 +1,36 @@
-pipeline{
-  agent any
+import groovy.json.JsonSlurperClassic
 
-  tools {
-    nodejs "node"
+def jsonParse(def json) {
+    new groovy.json.JsonSlurperClassic().parseText(json)
+}
+pipeline {
+  agent { label 'principal' }
+  environment {
+    appName = "variable" 
   }
-
-  parameters {
-  string(name:'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor del docker.' )
-  string(name: 'image_name' defaultValue: 'pagina_img', description: 'Nombre de la imagen de docker.')
-  string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de la pagina,')
-  string(name: 'container_port', defaultValue: 80, description: 'Puerto que usa el contenedor,')
-  }
-
   stages {
-    stage('install') {
-      steps{
-        git branch: 'develop', url: 'https://github.com/JCGIT03/Taller_Jenkins.git'
-        dir('.') {
-          sh 'npm install'
+
+ stage("paso 1"){
+     
+      steps {
+          script {			
+           sh "echo 'hola mundo'"
         }
       }
     }
-    stage('test') {
-      steps {
-        
-}
-}
+  }
+  post {
+      always {          
+          deleteDir()
+           sh "echo 'fase always'"
+      }
+      success {
+            sh "echo 'fase success'"
+        }
+
+      failure {
+            sh "echo 'fase failure'"
+      }
+      
+  }
+}  
