@@ -13,7 +13,10 @@ pipeline {
   }
 
   stages{
-    stage('install'){
-      git branch
-  }
+    stage('install') {
+      steps {
+        git branch: 'develop', url: 'https://github.com/JCGIT03/Taller_Jenkins.git'
+        sh 'npm install'
+      }
+    }
 }
